@@ -7,6 +7,7 @@ function fixClassName() {
     }
 }
 
+// view processing
 function showInformation(msg) {
     fixClassName();
     let index = isClassFixed ? 1 : 0;
@@ -22,9 +23,23 @@ function showInformation(msg) {
 }
 
 
-let isShowing = true;
 let currentPlaybackRate = 1;
-
+// save playbackRate state during url changing
+(function () {
+    let oldHref = document.location.href;
+    const body = document.querySelector("body");
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(() => {
+            if (oldHref !== document.location.href) {
+                oldHref = document.location.href;
+                document.getElementsByTagName('video')[0].playbackRate = currentPlaybackRate
+            }
+        });
+    });
+    observer.observe(body, {childList: true, subtree: true});
+})();
+// shortcuts processing
+let isShowing = true;
 document.onkeyup = function (e) {
     if (e.altKey && e.code === 'Quote') { // alt + ' shortcut
         let display = isShowing ? "none" : "block";
@@ -43,7 +58,6 @@ document.onkeyup = function (e) {
         console.log(`"ALT" + "'" shortcut was pressed\n${msg}`);
     }
 
-    // todo: limits
     if (e.altKey && e.code === 'Period') { // alt + . shortcut
         currentPlaybackRate += 0.25
         document.getElementsByTagName('video')[0].playbackRate = currentPlaybackRate
