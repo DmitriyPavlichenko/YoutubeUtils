@@ -41,7 +41,7 @@ let currentPlaybackRate = 1;
 // shortcuts processing
 let isShowing = true;
 document.onkeyup = function (e) {
-    if (e.altKey && e.code === 'Quote') { // alt + ' shortcut
+    if (e.ctrlKey && e.code === 'Quote') { // ctrl + ' shortcut
         let display = isShowing ? "none" : "block";
         isShowing = !isShowing;
         for (const className of [
@@ -55,21 +55,21 @@ document.onkeyup = function (e) {
         }
         let msg = "Menu is " + (isShowing ? "on" : "off");
         showInformation(msg)
-        console.log(`"ALT" + "'" shortcut was pressed\n${msg}`);
+        console.log(`"CTRL" + "'" shortcut was pressed\n${msg}`);
     }
 
-    if (e.altKey && e.code === 'Period') { // alt + . shortcut
+    if (e.ctrlKey && e.code === 'Period') { // ctrl + . shortcut
         currentPlaybackRate += 0.25
         document.getElementsByTagName('video')[0].playbackRate = currentPlaybackRate
 
         showInformation(`${currentPlaybackRate}x`)
-        console.log(`"ALT" + "." shortcut was pressed\nVideo speed increased by 0.25 (current: ${currentPlaybackRate})`);
+        console.log(`"CTRL" + "." shortcut was pressed\nVideo speed increased by 0.25 (current: ${currentPlaybackRate})`);
     }
-    if (e.altKey && e.code === 'Comma') { // alt + , shortcut
+    if (e.ctrlKey && e.code === 'Comma') { // ctrl + , shortcut
         currentPlaybackRate -= 0.25
         document.getElementsByTagName('video')[0].playbackRate = currentPlaybackRate
 
         showInformation(`${currentPlaybackRate}x`)
-        console.log(`"ALT" + "," shortcut was pressed\nVideo speed decreased by 0.25 (current: ${currentPlaybackRate})`);
+        console.log(`"CTRL" + "," shortcut was pressed\nVideo speed decreased by 0.25 (current: ${currentPlaybackRate})`);
     }
 };
